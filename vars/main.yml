@@ -1,0 +1,30 @@
+---  
+app:
+  home: "{{ app_home }}"
+  current: "{{ app_current | default('') }}"
+  version: "{{ app_version }}"
+  serverport: "{{ app_serverport }}"  
+  protocol: "{{ app_protocol | default('http') }}"
+  src: "{{ app_src }}"
+  config: "{{ app_config }}"
+  lib:  "{{ app_lib }}"
+  db: "{{ app_db }}"
+  service: "{{ app_service }}"
+  template: "{{ app_template }}"
+  password: "{{ app_password }}"
+  remote_src: no
+  log: "{{ app_log }}"
+  logconfig_file: "{{ app_logconfig_file }}"
+  ssl:
+    enabled: "{{ app_ssl_enabled | default(false) }}"
+    src: "{{ inventory_hostname | lower}}/{{ ansible_host }}.p12"
+    type: PKCS12
+    dest: "{{ app_ssl }}"
+    store: "{{ app_ssl }}/{{ ansible_host }}.p12"
+    password: "{{app_ssl_password}}"
+    alias: "{{ app_ssl_alias }}"
+    protocol: TLS
+    enabledProctols: TLSv1.2
+  libs: "{{ app_libs }}"
+  datasource: "{{ platform.datasource }}"
+

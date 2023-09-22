@@ -1,0 +1,12 @@
+---
+- name: wait
+  uri:
+    url: "{{ app.protocol}}://localhost:{{app_serverport}}/api/actuator/info"
+    method: GET
+    validate_certs: false
+  register: _result
+  until: _result.status == 200
+  retries: 24
+  delay: 5
+  
+  

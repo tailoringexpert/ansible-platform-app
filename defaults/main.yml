@@ -1,0 +1,55 @@
+---
+# to be defined in playbook!
+#app_version: 0.0.6
+#app_snapshot: ""
+#app_snapshot: "-SNAPSHOT"
+
+user: tailoringexpert
+group: tailoringexpert 
+
+app_src: "{{ app_version }}/tailoringexpert-bootapp-{{ app_version }}{{app_snapshot}}-exec.jar"
+app_serverport: 8080
+app_logconfig_file: log4j2.xml
+
+app_home: "/app"
+app_lib: "{{ app_home }}/lib"
+app_service: "{{ app_home }}/service"
+app_config: "{{ app_home }}/config"
+app_log: "{{ app_home }}/log"
+app_template: "{{ app_home }}/templates"
+app_db: "{{ app_home }}/db"
+app_ssl: "{{ app_home }}/lib"
+
+app_libs:
+  - src: "{{ app_version }}/lib/mariadb-java-client-3.1.4.jar"
+    remote_src: no
+    force: false
+  - src: "{{ app_version }}/lib/tailoringexpert-security-{{ app_version }}{{app_snapshot}}.jar"
+    remote_src: no
+    force: true    
+
+app_password: DasIstDasHausVomNiklaus 
+app_ssl_password: TailoringExpert!
+app_ssl_alias: tailoringexpert
+  
+app_directories: [ 
+  "{{ app_home }}", 
+  "{{ app_lib }}", 
+  "{{ app_config }}",
+  "{{ app_log }}",
+  "{{ app_template }}",
+  "{{ app_db }}",
+  "{{ app_service }}"
+]  
+
+tenants: []  
+#  - name: tenant
+#    datasource:
+#      driver: org.mariadb.jdbc.Driver
+#      dialect: org.hibernate.dialect.MariaDBDialect
+#      url: jdbc:mariadb://{{ db_host_url }}/tailoringexpert_tenant
+#      username: tailoringexpert_tenant
+#      password: "{{ datasource_tenant_password }}"	        
+#    file:
+#      src: "{{ app_version }}/demo/tailoringexpert-tenant-distribution-{{ app_version }}{{ app_snapshot }}-lib.zip"
+#      remote_src: no   

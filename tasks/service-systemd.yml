@@ -1,0 +1,33 @@
+---
+- name: "Set service vars" 
+  set_fact:
+    service_dest: "{{ app.service }}"
+   
+- debug:
+    msg: " {{ item }}" 
+    verbosity: 1
+  with_items:
+    - "service to be created in: {{ service_dest }}"
+
+- name: Create service
+  template:
+    src: tailoringexpert.service.j2
+    dest:  "{{ service_dest }}/tailoringexpert.service"
+    mode: 0644
+    owner: "{{ user }}"
+    group: "{{ group }}"
+  ignore_errors: true  
+
+- name: Symlink service
+  file:
+    src: "{{ service_dest }}/tailoringexpert.service"
+    dest: "/etc/systemd/system/tailoringexpert.service"
+    state: link  
+  become: true 
+  remote_user: "{{ sudo_user }}"
+  
+- name: Reload daemon
+  systemd:    
+    daemon_reload: true  
+  become: true 
+  remote_user: "{{ sudo_user }}"    

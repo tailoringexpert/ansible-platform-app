@@ -1,0 +1,51 @@
+---
+- name: Install platform app
+  copy:
+    src: "{{ app.src }}"
+    dest: "{{ app.home }}"
+    remote_src: "{{ app.remote_src }}"
+ 
+- name: Symlink current app version
+  file:
+    src: "{{ app.home }}/{{ app.src | basename }}"
+    dest:  "{{ app.home }}/tailoringexpert-exec.jar"
+    state: link         
+  
+- name: Install SSL certificate
+  copy:
+    src: "{{ app.ssl.src }}"
+    dest:  "{{ app.ssl.dest }}"
+    remote_src: no
+  when: app.ssl.enabled
+    
+- name: Copy platform required libs
+  copy:
+    src: "{{ item.src }}"
+    dest:  "{{ app.lib }}"
+    remote_src: "{{ item.remote_src }}"
+  loop: "{{ app.libs }}"  
+  
+- name: Create application.properties
+  template:
+    src: application.properties.j2
+    dest:  "{{ app.config }}/application.properties"
+    mode: 0640    
+  
+- name: Create logging config
+  template:
+    src: log4j2.xml.j2
+    dest:  "{{ app.config }}/log4j2.xml"
+    mode: 0640
+           
+- name: Create startscript
+  template:
+    src: start.sh.j2
+    dest:  "{{ app.home }}/start.sh"
+    mode: 0755
+
+- include_tasks: 
+    file: service.yml
+    
+- meta: flush_handlers
+  tags: always      
+ 
