@@ -1,0 +1,16 @@
+#!/bin/sh
+
+MAIN_CLASS={{ app.home }}/tailoringexpert-exec.jar
+APP_CONFIG=file://{{ app.config }}/
+LOADER_CONFIG=file:{{ app.lib }}/,file:$MAIN_CLASS
+LOG_CONFIG=file://{{ app.config }}/{{ app.logconfig_file }}
+#BIN_DIR={ bin_dir }}
+
+# ***********************************************
+# ***********************************************
+
+ARGS="-Dloader.path=${LOADER_CONFIG} -Dspring.config.additional-location=${APP_CONFIG} -Dlog4j2.configurationFile=${LOG_CONFIG}"
+
+exec java $ARGS -jar $MAIN_CLASS 
+
+

@@ -1,0 +1,17 @@
+# {{ ansible_managed }}
+
+[Unit]
+Description=TailoringExpert Platform
+After=syslog.target
+
+[Service]
+Type=simple
+ExecStart={{ app.home }}/start.sh
+SuccessExitStatus=143
+Restart=always
+RestartSec=5
+User={{ user }}
+Group={{ group }}
+
+[Install] 
+WantedBy=multi-user.target

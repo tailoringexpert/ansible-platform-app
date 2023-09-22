@@ -1,0 +1,30 @@
+---
+- name: Symlink current version
+  file:
+    src: "{{ app.home }}"
+    dest: "{{ app.current }}"
+    state: link
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    force: true
+  when: app.current | length > 0
+  
+- name: Create directory layout
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ group }}"    
+  with_items: "{{ app_directories }}"
+  when: item | length > 0  
+
+- include_tasks: 
+    file: app.yml
+     
+- name: ensure {{ user }} is owner of {{ app_home }} dirs and files
+  file: 
+    dest: "{{ app_home }}"
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    recurse: yes
+    

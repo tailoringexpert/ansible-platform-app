@@ -1,0 +1,26 @@
+---
+- include_tasks: 
+    file: "service-{{ ansible_service_mgr  | lower }}.yml"
+        
+- name: Enable service 
+  service:
+    name: tailoringexpert
+    enabled: yes  
+    state: started
+  become: true  
+  remote_user: "{{ sudo_user }}"
+  notify: wait
+  
+- meta: flush_handlers
+  tags: always  
+  
+#- name: wait
+#  uri:
+#    url: "{{ app.protocol}}://localhost:{{app_serverport}}/api/actuator/info"
+#    method: GET
+#    validate_certs: false
+#  register: _result
+#  until: _result.status == 200
+#  retries: 24
+#  delay: 5
+  
