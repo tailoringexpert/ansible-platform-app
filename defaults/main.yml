@@ -17,6 +17,7 @@ app_service: "{{ app_home }}/service"
 app_config: "{{ app_home }}/config"
 app_log: "{{ app_home }}/log"
 app_template: "{{ app_home }}/templates"
+app_attachment: "{{app_home }}/attachments"
 app_db: "{{ app_home }}/db"
 app_ssl: "{{ app_home }}/lib"
 
@@ -38,6 +39,7 @@ app_directories: [
   "{{ app_config }}",
   "{{ app_log }}",
   "{{ app_template }}",
+  "{{ app_attachment }}",
   "{{ app_db }}",
   "{{ app_service }}"
 ]  

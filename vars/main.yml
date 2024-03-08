@@ -11,6 +11,7 @@ app:
   db: "{{ app_db }}"
   service: "{{ app_service }}"
   template: "{{ app_template }}"
+  attachment: "{{ app_attachment }}"    
   password: "{{ app_password }}"
   remote_src: no
   log: "{{ app_log }}"
